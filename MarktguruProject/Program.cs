@@ -1,4 +1,8 @@
 using MarktguruProject.Authentication;
+using MarktguruProject.Repositories.Implementations;
+using MarktguruProject.Repositories.Interfaces;
+using MarktguruProject.Services.Implementations;
+using MarktguruProject.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,9 @@ builder.Services.AddAuthentication("BasicAuthentication")
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
