@@ -15,5 +15,9 @@ namespace MarktguruProject.Repositories.Implementations
             Products.Add(product);
             await Task.CompletedTask;
         }
+        public async Task<IEnumerable<Product>> GetAllAsync()
+        {
+            return await Task.FromResult(Products);
+        }
     }
 }
