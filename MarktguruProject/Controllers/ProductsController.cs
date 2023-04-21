@@ -17,6 +17,14 @@ namespace MarktguruProject.Controllers
             _productService = productService;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Product>>> GetList()
+        {
+            var list = await this._productService.GetAllAsync();
+            return list.Select(x => new Product(x)).ToList();
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> Add([FromBody] Product product)
