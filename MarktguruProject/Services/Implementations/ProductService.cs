@@ -34,6 +34,11 @@ namespace MarktguruProject.Services.Implementations
             var product = await this._productRepository.GetByIdAsync(id);
             return product == null ? null : new Product(product);
         }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await this._productRepository.DeleteAsync(id);
+        }
+
 
     }
 }
