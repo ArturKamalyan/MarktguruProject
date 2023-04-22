@@ -1,8 +1,11 @@
-﻿using MarktguruProject.DTOModels;
+﻿using FluentValidation.AspNetCore;
+using MarktguruProject.DTOModels;
 using MarktguruProject.Repositories.Interfaces;
 using MarktguruProject.Services.Interfaces;
+using MarktguruProject.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace MarktguruProject.Controllers
 {
@@ -37,6 +40,10 @@ namespace MarktguruProject.Controllers
         [Authorize]
         public async Task<ActionResult> Add([FromBody] ProductDetails product)
         {
+            var validator = new ProductValidator().Validate(product);
+            if (!validator.IsValid)
+                return BadRequest(validator.Errors);
+
             await this._productService.AddAsync(product.ToModel());
             return Ok();
         }
