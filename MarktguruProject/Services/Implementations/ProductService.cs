@@ -18,10 +18,16 @@ namespace MarktguruProject.Services.Implementations
             await this._productRepository.AddAsync(product.ToEntity());
             await Task.CompletedTask;
         }
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<IEnumerable<Product?>> GetAllAsync()
         {
             var list = await this._productRepository.GetAllAsync();
             return list.Select(x => new Product(x)).ToList();
+        }
+
+        public async Task<Product?> GetByIdAsync(int id)
+        {
+            var product = await this._productRepository.GetByIdAsync(id);
+            return product == null ? null : new Product(product);
         }
 
     }

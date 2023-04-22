@@ -19,5 +19,9 @@ namespace MarktguruProject.Repositories.Implementations
         {
             return await Task.FromResult(Products);
         }
+        public async Task<Product?> GetByIdAsync(int id)
+        {
+            return await Task.FromResult(Products.FirstOrDefault(p => p.Id == id));
+        }
     }
 }
