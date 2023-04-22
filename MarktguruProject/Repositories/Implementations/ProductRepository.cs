@@ -1,6 +1,8 @@
 ﻿using MarktguruProject.Entities;
 using MarktguruProject.Repositories.Interfaces;
+using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace MarktguruProject.Repositories.Implementations
 {
@@ -11,8 +13,13 @@ namespace MarktguruProject.Repositories.Implementations
 
         public async Task AddAsync(Product product)
         {
+            var existingProduct = Products.Find(x => x.Name.Equals(product.Name));
+            if (existingProduct != null)
+                product.Name = $"{product.Name} {(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"))}";
+           
             product.Id = _nextId++;
             Products.Add(product);
+
             await Task.CompletedTask;
         }
         public async Task<IEnumerable<Product>> GetAllAsync()
