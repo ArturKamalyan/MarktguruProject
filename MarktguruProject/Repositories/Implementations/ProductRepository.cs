@@ -31,6 +31,17 @@ namespace MarktguruProject.Repositories.Implementations
 
             await Task.CompletedTask;
         }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var product = await GetByIdAsync(id);
+            if (product != null)
+            {
+                Products.Remove(product);
+                return true;
+            }
+
+            return false;
+        }
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await Task.FromResult(Products);

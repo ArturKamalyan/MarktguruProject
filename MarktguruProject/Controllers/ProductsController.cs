@@ -1,11 +1,9 @@
 ﻿using FluentValidation.AspNetCore;
 using MarktguruProject.DTOModels;
-using MarktguruProject.Repositories.Interfaces;
 using MarktguruProject.Services.Interfaces;
 using MarktguruProject.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace MarktguruProject.Controllers
 {
@@ -63,6 +61,13 @@ namespace MarktguruProject.Controllers
             product.DateCreated = existingProduct.DateCreated;
             await this._productService.EditAsync(product.ToModel());
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult> Delete(int id)
+        {
+            return (await this._productService.DeleteAsync(id)) ? Ok() : NotFound();
         }
     }
 }
