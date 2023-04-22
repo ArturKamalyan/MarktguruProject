@@ -27,6 +27,7 @@
                 Price = this.Price,
                 Available = this.Available,
                 Description = this.Description,
+                DateCreated = this.DateCreated
             };
         }
     }

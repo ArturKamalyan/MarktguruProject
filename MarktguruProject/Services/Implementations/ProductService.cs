@@ -1,6 +1,7 @@
 ﻿using MarktguruProject.DomainModels;
 using MarktguruProject.Repositories.Interfaces;
 using MarktguruProject.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MarktguruProject.Services.Implementations
 {
@@ -14,8 +15,12 @@ namespace MarktguruProject.Services.Implementations
 
         public async Task AddAsync(Product product)
         {
-            product.DateCreated = DateTime.Now;
             await this._productRepository.AddAsync(product.ToEntity());
+            await Task.CompletedTask;
+        }
+        public async Task EditAsync(Product product)
+        {
+            await this._productRepository.EditAsync(product.ToEntity());
             await Task.CompletedTask;
         }
         public async Task<IEnumerable<Product?>> GetAllAsync()

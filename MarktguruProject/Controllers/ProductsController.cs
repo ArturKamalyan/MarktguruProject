@@ -47,5 +47,22 @@ namespace MarktguruProject.Controllers
             await this._productService.AddAsync(product.ToModel());
             return Ok();
         }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult> Edit([FromBody] ProductDetails product)
+        {
+            var validator = new ProductValidator().Validate(product);
+            if (!validator.IsValid)
+                return BadRequest(validator.Errors);
+
+            var existingProduct = await this._productService.GetByIdAsync(product.Id);
+            if (existingProduct == null)
+                return NotFound();
+
+            product.DateCreated = existingProduct.DateCreated;
+            await this._productService.EditAsync(product.ToModel());
+            return Ok();
+        }
     }
 }

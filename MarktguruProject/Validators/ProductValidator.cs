@@ -9,11 +9,6 @@ namespace MarktguruProject.Validators
         {
             RuleFor(p => p.Name).NotEmpty();
             RuleFor(p => p.Price).GreaterThan(0);
-
-            this.RuleSet("Put", () =>
-            {
-                this.RuleFor(m => m.Id).GreaterThan(0);
-            });
         }
     }
 }
